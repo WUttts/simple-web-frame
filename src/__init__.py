@@ -1,6 +1,7 @@
 from flask import Flask
-from src.config.myConfig import config
+from src.config.my_config import config
 from src.controller import config_blueprint
+from src.db import DB
 
 
 def app_run(config_name):

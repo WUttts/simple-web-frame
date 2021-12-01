@@ -1,5 +1,5 @@
 # simple-web-frame
 ## run
 ```
-python manager.py runserver
+python manager.py run
 ```

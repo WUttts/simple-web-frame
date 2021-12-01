@@ -1,4 +1,5 @@
 from flask import Blueprint,render_template,request
+from src.service.test_service import TestService
 
 test = Blueprint("test", __name__, url_prefix='')
 
@@ -11,4 +12,5 @@ def test_hello():
 @test.route('/index')
 def hello():
     name = request.args.get("name")
-    return render_template("index.html",name=name)
+    result = TestService().test()
+    return render_template("test.html",name=name,result=result)
