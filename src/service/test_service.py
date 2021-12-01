@@ -7,5 +7,5 @@ class TestService:
 
     def test(self):
         sql = "select * from test"
-        self.db.execute(sql)
+        self.db.query(sql)
         return self.db.result()

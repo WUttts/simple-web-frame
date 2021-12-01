@@ -4,9 +4,6 @@ from src.service.test_service import TestService
 api = Blueprint("api", __name__, url_prefix='')
 
 
-@api.route('/')
-def test_hello():
-    return '<h1>hello</h1>'
 
 # 测试页面  
 @api.route('/index')

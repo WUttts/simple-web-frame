@@ -27,17 +27,24 @@ class DB:
         )
         self.__result = []
 
+    #插入多条数据
     def save(self, sql, params):
+        """
+        :param sql:
+        :param param: 必须是元组或列表[(),()]或（（），（））
+        :return:
+        """
         conn = self.pool.connection()
         cursor = conn.cursor()
         try:
-            cursor.execute(sql, params)
+            cursor.executemany(sql, params)
             conn.commit()
             _id = cursor.lastrowid
             if _id == 0:
                 return True
             return _id
         except Exception as e:
+            conn.rollback()
             print('insert except'+e.args)
         finally:
             cursor.close()
