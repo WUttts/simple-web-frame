@@ -1,10 +1,11 @@
-from . import api,page
+from .api import api
+from .page import page
 
 # 蓝图映射
 DEFAULT_BLUEPRINT = (
     # (蓝图，前缀)
     (api, '/api'),
-    (page,'/')
+    (page,'/'),
     
 )
 

@@ -34,9 +34,6 @@ def generate(word_list,
         random_state=random_state,
         scale=scale
     ).generate(space_list)
-    plt.imshow(wc) #显示词云
-    plt.axis('off') #关闭x,y轴
-    plt.show()#显示
     wc.to_file('test2_ciyun.jpg') 
     return wc
     
