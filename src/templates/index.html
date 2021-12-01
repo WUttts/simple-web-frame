@@ -9,15 +9,30 @@
     <title>首页</title>
 </head>
 <body>
-    <div class="form-box">
+    <div class="controller">
+        <button type="button" class="btn  active controller-btn" id="controller-btn1">手动输入</button>
+        <button type="button" class="btn controller-btn" id="controller-btn2">导入文件</button>
+    </div>
+    <div class="form-box" id="fromId">
+        <div class="input-group key-box ">
+            <input type="text" class="form-control" placeholder="请输入姓名" aria-describedby="basic-addon2" id="name">
+        </div>
         <div class="input-group key-box">
-            <input type="text" class="form-control" placeholder="请输入关键字,多个关键字使用%分开" aria-describedby="basic-addon2" id="keyInput">
-            <span class="input-group-addon" id="subKey">提交</span>
+            <input type="text" class="form-control" placeholder="请输入学号" aria-describedby="basic-addon2" id="number">
         </div>
-        <div class="file-box">
-            <input type="file" accept=".xls, .xlsx" id="fileUpload">
-            <button type="button" class="btn btn-default" id="uploadFile">上传</button>
+        <div class="input-group key-box">
+            <input type="text" class="form-control" placeholder="请输入关键字" aria-describedby="basic-addon2" id="keyInput">
         </div>
+        <div class="input-group key-box">
+            <textarea placeholder="请输入回答" style="min-height: 50px;width: 320px;" id="textId"></textarea>
+        </div>
+        <div class="input-group key-box">
+            <button type="button" class="btn sub" id="subKey">提交</button>
+        </div>
+    </div>
+    <div class="file-box" id="fileId" style="display: none">
+        <input type="file" accept=".xls, .xlsx" id="fileUpload">
+        <button type="button" class="btn btn-default" id="uploadFile">上传</button>
     </div>
     <div class="text-box">
         <div>
@@ -104,16 +119,49 @@
     $(
         function () {
             const basurl = window.location.origin
+            $("#controller-btn1").click(() => {
+                $(".controller-btn").removeClass("active")
+                $("#controller-btn1").addClass("active")
+                $("#fileId").hide()
+                $("#fromId").show()
+            })
+            $("#controller-btn2").click(() => {
+                $(".controller-btn").removeClass("active")
+                $("#controller-btn2").addClass("active")
+                $("#fromId").hide()
+                $("#fileId").show()
+            })
             $("#subKey").click(function(){
+                console.log(123);
                 const keys = $("#keyInput").val()
+                const name = $("#name").val()
+                const number = $("#number").val()
+                const text = $("#textId").val()
+                if (keys === '' ) {
+                    alert('请输入关键字')
+                    return
+                }
+                if (name === '' ) {
+                    alert('请输入姓名')
+                    return
+                }
+                if (number === '' ) {
+                    alert('请输入学号')
+                    return
+                }
+                if (text === '' ) {
+                    alert('请输入回到的内容')
+                    return
+                }
+
                 $.ajax({
-                    url: `${basurl}/test/subKeys`,
+                    url: `${basurl}/api/subKeys`,
                     type: 'post',
-                    hand: {
-                      contentType: 'application/json'
-                    },
                     data: {
-                        keys
+                        key:keys,
+                        name,
+                        number,
+                        text
                     },
                     success: (res) => {
                         console.log(res);
@@ -129,7 +177,7 @@
                 const fd = new FormData()
                 fd.append('avatar', file[0])
                 $.ajax({
-                    url: `${basurl}/test/upload_file`,
+                    url: `${basurl}/api/upload_file`,
                     enctype: 'multipart/form-data',
                     type: 'post',
                     hand: {

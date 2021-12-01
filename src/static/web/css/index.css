@@ -6,9 +6,16 @@ html{
     padding: 0;
     margin: 0;
 }
+.controller{
+    padding: 30px 0 0 30px;
+}
+.active{
+    background: #2e6da4;
+    color: #ffffff;
+}
 .form-box{
     width: 350px;
-    padding: 30px 0 30px 30px;
+    padding: 0px 0 30px 30px;
 }
 .key-box{
     width: 100%;
@@ -17,8 +24,12 @@ html{
 .input-group-addon{
     cursor: pointer;
 }
+.sub{
+    background: #2e6da4;
+    color: #ffffff;
+}
 .file-box{
-
+    padding: 30px 0 30px 30px;
 }.file-box input{
     float: left;
  }
