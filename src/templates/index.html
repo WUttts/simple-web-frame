@@ -112,6 +112,8 @@
             <span>标题一</span>
         </div>
     </div>
+    <div id="wordcloud">
+    </div>
 </body>
 <script src="{{ url_for('static', filename = 'web/js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ url_for('static', filename = 'web/js/bootstrap.min.js') }}"></script>
@@ -193,7 +195,14 @@
             });
 
             $("#view").click(() => {
-                
+                $.ajax({
+                    url: `${basurl}/api/wordcloud`,
+                    type: 'get',
+                    success: (res) => {
+                        h="<img src='data:image/jpg;base64,"+res+"' style=\"width:300px;height:200px;\"/>";
+                        $("#wordcloud").append(h)
+                    }
+                })
             })
         }
     )
