@@ -108,7 +108,7 @@
                 const keys = $("#keyInput").val()
                 $.ajax({
                     url: `${basurl}/test/subKeys`,
-                    method: 'post',
+                    type: 'post',
                     hand: {
                       contentType: 'application/json'
                     },
@@ -121,11 +121,28 @@
                 })
             });
             $("#uploadFile").click(() => {
-                const files = $("#fileUpload").prop()
-                const data = new FormData()
-                data.append('file', files[0])
-                console.log(data);
-            })
+                const file = $("#fileUpload")[0].files
+                console.log(file);
+                if (file.length <= 0) {
+                  return alert('请上传文件')
+                 }
+                const fd = new FormData()
+                fd.append('avatar', file[0])
+                $.ajax({
+                    url: `${basurl}/test/upload_file`,
+                    enctype: 'multipart/form-data',
+                    type: 'post',
+                    hand: {
+                      contentType: "multipart/form-data"
+                    },
+                    data: {
+                        file: fd
+                    },
+                    success: (res) => {
+                        console.log(res);
+                    }
+                })
+            });
         }
     )
 </script>

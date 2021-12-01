@@ -21,7 +21,7 @@ class DB:
             host='127.0.0.1',
             port=3306,
             user='root',
-            password='356615',
+            password='wtp164614',
             database='my_project',
             charset='utf8'
         )
