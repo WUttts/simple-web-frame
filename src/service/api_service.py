@@ -4,11 +4,11 @@ from src.utils import wordcloud_util
 class ApiService:
     INSERT_SQL = "INSERT INTO `keys`(`key`, \
        `name`, `number`, `answer`) \
-       VALUES ('%s', '%s',  %s,  '%s') \ "
+       VALUES (%s, %s,  %s,  %s) "
 
     def insert(self,value):
-        self.INSERT_SQL % value
-        return db.save(self.INSERT_SQL) 
+        r = db.save(self.INSERT_SQL,value) 
+        return r
 
     def get_wordcloud(self):
         tmp = ['''
@@ -18,5 +18,7 @@ class ApiService:
      we can take part-time jobs, which can make us realize responsibility and make ourselves better prepared for social life.''']
         wc = wordcloud_util.generate(tmp)
         return wordcloud_util.convert_img_to_b64(wc)
+
+
 
 

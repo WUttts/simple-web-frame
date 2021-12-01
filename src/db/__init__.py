@@ -1,4 +1,4 @@
-import pymysql
+import mysql.connector as connector
 import threading
 from DBUtils.PooledDB import PooledDB
 
@@ -14,7 +14,7 @@ class DB:
 
     def __init__(self):
         self.pool = PooledDB(
-            creator=pymysql,
+            creator=connector,
             maxconnections=10,
             mincached=2,
             maxcached=5,
@@ -28,12 +28,12 @@ class DB:
             user=self.USER,
             password=self.PASSWORD,
             database=self.DATABSE,
+            auth_plugin='mysql_native_password',
             charset='utf8'
         )
         self.__result = []
 
-    # 插入多条数据
-    def save(self, sql):
+    def save(self, sql,value):
         """
         :param sql:
         :param param: 单个插入
@@ -42,7 +42,7 @@ class DB:
         conn = self.pool.connection()
         cursor = conn.cursor()
         try:
-            cursor.execute(sql)
+            cursor.execute(sql,value)
             conn.commit()
             _id = cursor.lastrowid
             if _id == 0:
