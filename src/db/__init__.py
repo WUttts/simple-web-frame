@@ -75,3 +75,5 @@ class DB:
 
     def result(self):
         return self.__result
+
+db = DB()

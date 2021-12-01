@@ -1,21 +1,11 @@
-from flask import Blueprint, render_template, request, jsonify
-from src.service.test_service import TestService
-from src.db import DB
+from flask import Blueprint, request, jsonify
+from src.service.api_service import ApiService
+
 
 api = Blueprint("api", __name__, url_prefix='')
 
 
-
-
-# 测试页面  
-@api.route('/index')
-def hello():
-    # name = request.args.get("name")
-    # result = TestService().test()
-    return render_template("index.html")
-
-
-@api.route('/subKeys',  methods=['post'])
+@api.route('/insert',  methods=['post'])
 def sub_keys():
     key = request.form["key"]
     name = request.form["name"]
@@ -23,8 +13,9 @@ def sub_keys():
     text = request.form["text"]
     if not all([key, name, number, text]):
         return jsonify(code=400, message="missing parameter")
-    sql = 'INSERT INTO keys ( key, name, number, answer ) VALUES( key, name, number, text )'
-    DB().save()
-    return jsonify(code=200, message="ok!")
-
-
+    service = ApiService()
+    value = (key, name, number, text)
+    result = service.insert(value)
+    if result:
+        return jsonify(code=200, message="ok!")
+    return jsonify(code=400, message="missing parameter")
