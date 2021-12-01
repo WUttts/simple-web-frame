@@ -4,10 +4,129 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>测试</title>
+    <link href="{{ url_for('static',filename ='web/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static',filename ='web/css/index.css')}}" rel="stylesheet">
+    <title>首页</title>
 </head>
 <body>
-    <h1>这是一个测试页面</h1>
-    <h1>{{ name }}</h1>
+    <div class="form-box">
+        <div class="input-group key-box">
+            <input type="text" class="form-control" placeholder="请输入关键字,多个关键字使用%分开" aria-describedby="basic-addon2" id="keyInput">
+            <span class="input-group-addon" id="subKey">提交</span>
+        </div>
+        <div class="file-box">
+            <input type="file" accept=".xls, .xlsx" id="fileUpload">
+            <button type="button" class="btn btn-default" id="uploadFile">上传</button>
+        </div>
+    </div>
+    <div class="text-box">
+        <div>
+            <button type="button" class="btn btn-default">统计</button>
+            <button type="button" class="btn btn-default">查看云词图</button>
+        </div>
+    </div>
+    <div class="table-box">
+        <div class="table-head">
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+        </div>
+        <div class="table-r">
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+        </div>
+        <div class="table-r">
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+        </div>
+        <div class="table-r">
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+        </div>
+        <div class="table-r">
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+        </div>
+        <div class="table-r">
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+        </div>
+        <div class="table-r">
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+        </div>
+        <div class="table-r">
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+        </div>
+        <div class="table-r">
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+        </div>
+        <div class="table-r">
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+            <span>标题一</span>
+        </div>
+    </div>
 </body>
+<script src="{{ url_for('static', filename = 'web/js/jquery-3.1.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename = 'web/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript">
+    $(
+        function () {
+            const basurl = window.location.origin
+            $("#subKey").click(function(){
+                const keys = $("#keyInput").val()
+                $.ajax({
+                    url: `${basurl}/test/subKeys`,
+                    method: 'post',
+                    hand: {
+                      contentType: 'application/json'
+                    },
+                    data: {
+                        keys
+                    },
+                    success: (res) => {
+                        console.log(res);
+                    }
+                })
+            });
+            $("#uploadFile").click(() => {
+                const files = $("#fileUpload").prop()
+                const data = new FormData()
+                data.append('file', files[0])
+                console.log(data);
+            })
+        }
+    )
+</script>
 </html>
