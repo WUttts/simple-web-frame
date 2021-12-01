@@ -6,7 +6,7 @@ config_name = os.environ.get('FLASK_CONFIG') or 'Dev'
 app = app_run(config_name)
 
 manager = Manager(app)
-manager.add_command("runserver", Server(use_debugger=True))
+manager.add_command("run", Server(use_debugger=True))
 
 if __name__ == '__main__':
     manager.run()
