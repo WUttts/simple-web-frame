@@ -7,12 +7,6 @@ from DBUtils.PooledDB import PooledDB
 class DB:
     _instance_lock = threading.Lock()
 
-    QUERY = "SELECT"
-    WHERE = "WHERE"
-    UPDATE = "UPDATE"
-    SET = "SET"
-    FROM = "FROM"
-
     def __init__(self):
         self.pool = PooledDB(
             creator=pymysql,
@@ -22,7 +16,7 @@ class DB:
             maxshared=3,
             blocking=True,
             maxusage=None,
-            setsession=[], 
+            setsession=[],
             ping=0,
             host='127.0.0.1',
             port=3306,
@@ -33,21 +27,37 @@ class DB:
         )
         self.__result = []
 
-    def execute(self,sql):
+    def save(self, sql, params):
+        conn = self.pool.connection()
+        cursor = conn.cursor()
+        try:
+            cursor.execute(sql, params)
+            conn.commit()
+            _id = cursor.lastrowid
+            if _id == 0:
+                return True
+            return _id
+        except Exception as e:
+            print('insert except'+e.args)
+        finally:
+            cursor.close()
+            conn.close()
+
+    def query(self, sql):
         conn = self.pool.connection()
         cursor = conn.cursor()
         try:
             cursor.execute(sql)
             data = cursor.fetchall()
             col_info = [tuple[0] for tuple in cursor.description]
-            self.process_result(col_info,data)
+            self.__process_result(col_info, data)
         except Exception as e:
             print(e)
         finally:
             cursor.close()
             conn.close()
-    
-    def process_result(self,col_info,data):
+
+    def __process_result(self, col_info, data):
         result_map = {}
         for row in data:
             i = 0
@@ -58,4 +68,3 @@ class DB:
 
     def result(self):
         return self.__result
-
