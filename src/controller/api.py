@@ -47,10 +47,13 @@ def upload():
         return jsonify(response)
     file.save(os.path.join('./tmp/', file.filename))
 
+    response['data'] = file.filename
+    response['msg']='上传成功'
     return jsonify(response)
 
 
 
-@api.route('/wordcloud', methods=['get'])
+@api.route('/count', methods=['post'])
 def count():
-    return service.get_wordcloud().decode()
+    response['data'] = request.json
+    return response
