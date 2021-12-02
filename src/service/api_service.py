@@ -6,9 +6,14 @@ class ApiService:
        `name`, `number`, `answer`) \
        VALUES (%s, %s,  %s,  %s) "
 
+    LIST_SQL="SELECT * FROM `keys`"
+
     def insert(self,value):
         r = db.save(self.INSERT_SQL,value) 
         return r
+
+    def list(self):
+        return db.query(self.LIST_SQL)
 
     def get_wordcloud(self):
         tmp = ['''

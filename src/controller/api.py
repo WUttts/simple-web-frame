@@ -34,6 +34,12 @@ def wordcloud():
     return service.get_wordcloud().decode()
 
 
+@api.route('/list', methods=['get'])
+def wordcloud():
+    response['data'] = service.list()
+    return response
+
+
 @api.route('/upload', methods=['post'])
 def upload():
     if 'file' not in request.files:
