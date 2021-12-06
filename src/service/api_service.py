@@ -18,12 +18,8 @@ class ApiService:
         return db.result()
 
     def get_wordcloud(self):
-        tmp = ['''
-     Generally speaking, long holidays are good for us college students. 
-     On the one hand, we have a lot of time to study by ourselves 
-     and thus improve weaknesses and further develop strengths. On the other hand, 
-     we can take part-time jobs, which can make us realize responsibility and make ourselves better prepared for social life.''']
-        wc = wordcloud_util.generate(tmp)
+        word_list = [x['question'] for x in self.list()]
+        wc = wordcloud_util.generate(word_list)
         return wordcloud_util.convert_img_to_b64(wc)
 
     def count(self, keys):
