@@ -45,6 +45,7 @@ class DB:
             cursor.execute(sql,value)
             conn.commit()
             _id = cursor.lastrowid
+            print(_id)
             if _id == 0:
                 return True
             return _id
@@ -65,7 +66,7 @@ class DB:
         conn = self.pool.connection()
         cursor = conn.cursor()
         try:
-            cursor.executemany(sql, (params))
+            cursor.executemany(sql, params)
             conn.commit()
             _id = cursor.lastrowid
             if _id == 0:
@@ -79,6 +80,10 @@ class DB:
             conn.close()
 
     def query(self, sql):
+        """
+        :param sql: 执行查询sql,ep:select name from t where id = 1
+        :return: [{name:"jack"}]
+        """
         conn = self.pool.connection()
         cursor = conn.cursor()
         try:
@@ -93,9 +98,10 @@ class DB:
             conn.close()
 
     def __process_result(self, col_info, data):
-        result_map = {}
+        self.__result=[]
         for row in data:
             i = 0
+            result_map = {}
             for field in col_info:
                 result_map[field] = row[i]
                 i = i + 1
@@ -106,8 +112,8 @@ class DB:
 
 
 db = DB()
-if __name__ == '__main__':
-    INSERT_SQL = "INSERT INTO `keys` (`key`, `name`, `number`, `answer`) VALUES( %s, %s, %s, %s )"
-    values = (("sasa", "wts", 1, "sasasasacsfeg"),
-              ("sasa", "wts", 1, "sasasasacsfeg"))
-    db.save(INSERT_SQL, values)
+# if __name__ == '__main__':
+#     INSERT_SQL = "INSERT INTO `keys` (`key`, `name`, `number`, `answer`) VALUES( %s, %s, %s, %s )"
+#     values = (("sasa", "wts", 1, "sasasasacsfeg"),
+#               ("sasa", "wts", 1, "sasasasacsfeg"))
+#     db.save(INSERT_SQL, values)

@@ -7,8 +7,7 @@ class Dev:
 
     # 通用配置
     SECRET_KEY = 'ac#$ds8911'
-    UPLOAD_FOLDER='../../'
-    CSRF_ENABLED = True
+    CSRF_ENABLED = False
     WHOOSH_PATH = os.path.join(os.getcwd(), 'whoosh_indexes')
     WTF_CSRF_ENABLED = False
 

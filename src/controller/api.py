@@ -1,5 +1,6 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, json, request, jsonify
 from src.service.api_service import ApiService
+import uuid
 import os
 
 
@@ -14,10 +15,12 @@ response = {
 }
 
 
+TMP_PATH = './tmp/'
+
 @api.route('/insert',  methods=['post'])
 def insert():
     body = request.json
-    value = (body['key'], body['name'], int(body['number']), body['answer'])
+    value = (body['name'], int(body['number']), body['question'])
     result = service.insert(value)
     response['data'] = result
     print(result)
@@ -35,9 +38,9 @@ def wordcloud():
 
 
 @api.route('/list', methods=['get'])
-def wordcloud():
+def list():
     response['data'] = service.list()
-    return response
+    return jsonify(response)
 
 
 @api.route('/upload', methods=['post'])
@@ -51,15 +54,20 @@ def upload():
         response['code'] = 400
         response['msg'] = '文件出错'
         return jsonify(response)
-    file.save(os.path.join('./tmp/', file.filename))
+    filename = str(uuid.uuid1()) + file.filename
+    file.save(os.path.join(TMP_PATH,filename) )
 
+    service.parse_file(TMP_PATH+filename)
+    
     response['data'] = file.filename
-    response['msg']='上传成功'
+    response['msg'] = '上传成功'
     return jsonify(response)
-
 
 
 @api.route('/count', methods=['post'])
 def count():
-    response['data'] = request.json
-    return response
+    body = request.json
+    keys = body['keys']
+    data = service.count(keys)
+    response['data'] = data
+    return jsonify(response)

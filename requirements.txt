@@ -4,3 +4,4 @@ DBUtils==1.2
 mysql-connector==2.2.9
 stylecloud==0.5.2
 wordcloud==1.8.2
+openpyxl==3.0.9
